@@ -17,6 +17,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    // Endpoint for user registration
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserRegistrationRequest userRegistrationRequest){
         try{
