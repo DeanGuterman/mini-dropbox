@@ -1,6 +1,5 @@
 package com.deanguterman.minidropbox;
 
-import jakarta.validation.constraints.NotBlank;
 
 // User login DTO
 public class UserLoginRequest {
