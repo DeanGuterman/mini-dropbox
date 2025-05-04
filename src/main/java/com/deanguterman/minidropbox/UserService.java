@@ -14,8 +14,8 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public String registerUser(UserRegistrationRequest request) throws Exception {
-        if (userRepository.existsByEmail(request.getEmail()) || userRepository.existsByUsername(request.getUsername())) throw new Exception("Email or username already exists");
+    public String registerUser(UserRegistrationRequest request) throws UserAlreadyExistsException {
+        if (userRepository.existsByEmail(request.getEmail()) || userRepository.existsByUsername(request.getUsername())) throw new UserAlreadyExistsException("Email or Username already exists");
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         User newUser = new User(request.getEmail(), request.getUsername(), encodedPassword);
         userRepository.save(newUser);
