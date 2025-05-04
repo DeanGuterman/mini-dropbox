@@ -28,6 +28,7 @@ public class UserController {
         }
     }
 
+    // Endpoint for user login
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@Valid @RequestBody UserLoginRequest userLoginRequest){
         try{
