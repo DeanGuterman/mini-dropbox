@@ -3,6 +3,8 @@ package com.deanguterman.minidropbox;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 // Service for user requests
 @Service
 public class UserService {
@@ -24,6 +26,14 @@ public class UserService {
     }
 
     public String loginUser(UserLoginRequest request) throws UserDoesntExistException {
-
+        Optional<User> optionalUser = userRepository.findByUsername(request.getUsername());
+        if (optionalUser.isPresent()){
+            User user = optionalUser.get();
+            String existingPassword = user.getPasswordHash();
+            if (passwordEncoder.matches(request.getPassword(), existingPassword)){
+                return "User logged in successfully";
+            }
+        }
+        throw new UserDoesntExistException("Username and password combination don't exist in the database");
     }
 }
