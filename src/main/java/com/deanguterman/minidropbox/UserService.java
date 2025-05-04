@@ -22,4 +22,8 @@ public class UserService {
         userRepository.save(newUser);
         return "User registered successfully";
     }
+
+    public String loginUser(UserLoginRequest request) throws UserDoesntExistException {
+
+    }
 }
