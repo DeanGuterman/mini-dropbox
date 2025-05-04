@@ -3,6 +3,7 @@ package com.deanguterman.minidropbox;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+// Service for user requests
 @Service
 public class UserService {
 
