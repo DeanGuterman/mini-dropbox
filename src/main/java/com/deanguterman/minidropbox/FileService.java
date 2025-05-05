@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Service
 public class FileService {
@@ -28,8 +29,8 @@ public class FileService {
             return "File upload failed";
         }
 
-        FileEntity newFile = new FileEntity();
-
+        FileEntity newFile = new FileEntity(file.getOriginalFilename(), destination.getAbsolutePath(), file.getSize(), LocalDateTime.now(), user);
         fileRepository.save(newFile);
+        return "File uploaded successfully";
     }
 }
