@@ -24,7 +24,7 @@ public class FileService {
 
         File destination = new File(uploadsFolder, file.getOriginalFilename());
         try{
-            file.transferTo(uploadsFolder);
+            file.transferTo(destination);
         } catch (IOException e) {
             return "File upload failed";
         }
