@@ -19,6 +19,14 @@ public class FileEntity {
     @ManyToOne
     private User user;
 
+    public FileEntity(String filename, String path, Long size, LocalDateTime uploadTime, User user){
+        this.filename = filename;
+        this.path = path;
+        this.size = size;
+        this.uploadTime = uploadTime;
+        this.user = user;
+    }
+
     // Getters
     public String getFilename(){return filename;}
     public String getPath(){return path;}
