@@ -3,6 +3,7 @@ package com.deanguterman.minidropbox;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name= "\"user\"")
 public class User {
 
     // Auto generate unique ID
