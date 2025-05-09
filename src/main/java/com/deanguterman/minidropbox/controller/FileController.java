@@ -1,5 +1,8 @@
-package com.deanguterman.minidropbox;
+package com.deanguterman.minidropbox.controller;
 
+import com.deanguterman.minidropbox.service.FileService;
+import com.deanguterman.minidropbox.entity.User;
+import com.deanguterman.minidropbox.repository.UserRepository;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

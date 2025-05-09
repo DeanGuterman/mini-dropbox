@@ -1,4 +1,4 @@
-package com.deanguterman.minidropbox;
+package com.deanguterman.minidropbox.exception;
 
 // Custom exception for handling pre-existing emails and password on registration
 public class UserAlreadyExistsException extends RuntimeException {

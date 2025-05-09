@@ -1,5 +1,12 @@
-package com.deanguterman.minidropbox;
+package com.deanguterman.minidropbox.service;
 
+import com.deanguterman.minidropbox.dto.UserLoginRequest;
+import com.deanguterman.minidropbox.dto.UserRegistrationRequest;
+import com.deanguterman.minidropbox.entity.User;
+import com.deanguterman.minidropbox.exception.UserAlreadyExistsException;
+import com.deanguterman.minidropbox.exception.UserDoesntExistException;
+import com.deanguterman.minidropbox.repository.UserRepository;
+import com.deanguterman.minidropbox.security.JwtService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,7 @@
-package com.deanguterman.minidropbox;
+package com.deanguterman.minidropbox.entity;
 
 import jakarta.persistence.*;
 
-import java.io.File;
 import java.time.LocalDateTime;
 
 @Entity

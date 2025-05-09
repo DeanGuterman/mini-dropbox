@@ -1,4 +1,4 @@
-package com.deanguterman.minidropbox;
+package com.deanguterman.minidropbox.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

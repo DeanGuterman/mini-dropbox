@@ -1,4 +1,4 @@
-package com.deanguterman.minidropbox;
+package com.deanguterman.minidropbox.exception;
 
 // Custom exception for handling login attempts with non-existing username and password combinations
 public class UserDoesntExistException extends RuntimeException{

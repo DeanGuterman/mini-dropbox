@@ -1,5 +1,6 @@
-package com.deanguterman.minidropbox;
+package com.deanguterman.minidropbox.repository;
 
+import com.deanguterman.minidropbox.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

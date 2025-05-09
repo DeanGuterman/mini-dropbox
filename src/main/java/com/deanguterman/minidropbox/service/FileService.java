@@ -1,10 +1,11 @@
-package com.deanguterman.minidropbox;
+package com.deanguterman.minidropbox.service;
 
+import com.deanguterman.minidropbox.entity.FileEntity;
+import com.deanguterman.minidropbox.entity.User;
+import com.deanguterman.minidropbox.repository.FileRepository;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;

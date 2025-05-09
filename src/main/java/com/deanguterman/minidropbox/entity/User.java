@@ -1,4 +1,4 @@
-package com.deanguterman.minidropbox;
+package com.deanguterman.minidropbox.entity;
 
 import jakarta.persistence.*;
 

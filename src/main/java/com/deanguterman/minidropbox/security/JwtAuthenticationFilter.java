@@ -1,4 +1,4 @@
-package com.deanguterman.minidropbox;
+package com.deanguterman.minidropbox.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
