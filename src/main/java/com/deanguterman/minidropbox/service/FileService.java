@@ -1,6 +1,6 @@
 package com.deanguterman.minidropbox.service;
 
-import com.deanguterman.minidropbox.entity.FileEntity;
+import com.deanguterman.minidropbox.entity.StoredFile;
 import com.deanguterman.minidropbox.entity.User;
 import com.deanguterman.minidropbox.repository.FileRepository;
 import org.springframework.core.io.InputStreamResource;
@@ -45,7 +45,7 @@ public class FileService {
             return "File upload failed";
         }
 
-        FileEntity newFile = new FileEntity(
+        StoredFile newFile = new StoredFile(
                 file.getOriginalFilename(),
                 destination.getAbsolutePath(),
                 file.getSize(),
@@ -59,7 +59,7 @@ public class FileService {
     }
 
     public Resource downloadFile(Long fileId) throws Exception{
-        Optional<FileEntity> file = fileRepository.findById(fileId);
+        Optional<StoredFile> file = fileRepository.findById(fileId);
         if (file.isPresent()){
             String filePath = file.get().getPath();
             File actualFile = new File(filePath);

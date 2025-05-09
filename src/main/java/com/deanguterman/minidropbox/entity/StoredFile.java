@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class FileEntity {
+public class StoredFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +19,9 @@ public class FileEntity {
     @ManyToOne
     private User user;
 
-    public FileEntity(){}
+    public StoredFile(){}
 
-    public FileEntity(String filename, String path, Long size, LocalDateTime uploadTime, User user){
+    public StoredFile(String filename, String path, Long size, LocalDateTime uploadTime, User user){
         this.filename = filename;
         this.path = path;
         this.size = size;
