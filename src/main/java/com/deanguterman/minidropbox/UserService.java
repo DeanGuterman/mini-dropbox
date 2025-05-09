@@ -1,8 +1,10 @@
 package com.deanguterman.minidropbox;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 // Service for user requests
@@ -11,10 +13,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder){
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, JwtService jwtService){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public String registerUser(UserRegistrationRequest request) throws UserAlreadyExistsException {
@@ -29,11 +33,16 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByUsername(request.getUsername());
         if (optionalUser.isPresent()){
             User user = optionalUser.get();
-            String existingPassword = user.getPasswordHash();
-            if (passwordEncoder.matches(request.getPassword(), existingPassword)){
-                return "User logged in successfully";
+            if (passwordEncoder.matches(request.getPassword(), user.getPasswordHash())){
+                UserDetails userDetails = org.springframework.security.core.userdetails.User
+                        .withUsername(user.getUsername())
+                        .password(user.getPasswordHash())
+                        .authorities(new ArrayList<>())
+                        .build();
+
+                return jwtService.generateToken(userDetails);
             }
         }
-        throw new UserDoesntExistException("Username and password combination don't exist in the database");
+        throw new UserDoesntExistException("Invalid credentials.");
     }
 }
