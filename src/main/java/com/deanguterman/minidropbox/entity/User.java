@@ -2,6 +2,7 @@ package com.deanguterman.minidropbox.entity;
 
 import jakarta.persistence.*;
 
+// Represents a user in the system (with hashed password)
 @Entity
 @Table(name= "\"user\"")
 public class User {

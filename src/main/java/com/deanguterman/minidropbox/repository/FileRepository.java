@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-// Repository for the FileEntity class
+// JPA repo for saving and finding uploaded files
 public interface FileRepository extends JpaRepository<StoredFile, Long> {
-    // JPA automatically implements these functions
     List<StoredFile> findByUser(User user);
 }

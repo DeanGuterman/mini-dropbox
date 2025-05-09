@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
+// Handles file upload and download endpoints
 @RestController
 @RequestMapping("/api/files")
 public class FileController {

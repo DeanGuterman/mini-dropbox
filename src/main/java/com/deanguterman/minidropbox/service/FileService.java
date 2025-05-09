@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+
+// Business logic for registration and login (hashing, checking DB, returning JWT)
 @Service
 public class FileService {
 

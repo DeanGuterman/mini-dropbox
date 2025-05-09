@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.User;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// Checks JWT on every request and authenticates the user if valid
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 

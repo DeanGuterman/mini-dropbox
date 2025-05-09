@@ -3,7 +3,7 @@ package com.deanguterman.minidropbox.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-// User login DTO
+// Input object for user login
 public class UserLoginRequest {
 
     @NotBlank

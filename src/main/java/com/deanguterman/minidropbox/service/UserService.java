@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Optional;
 
-// Service for user requests
+// Handles saving files to disk and DB, and returning them for download
 @Service
 public class UserService {
 

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+// Represents an uploaded file linked to a user
 @Entity
 public class StoredFile {
 

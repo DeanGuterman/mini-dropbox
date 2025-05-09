@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-// User Registration DTO
+// Input object for user registration (validated)
 public class UserRegistrationRequest {
 
     // Only allow non-blank usernames with a length of between 3 and 20 characters

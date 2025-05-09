@@ -1,6 +1,6 @@
 package com.deanguterman.minidropbox.exception;
 
-// Custom exception for handling login attempts with non-existing username and password combinations
+// Thrown if login credentials are incorrect
 public class UserDoesntExistException extends RuntimeException{
     public UserDoesntExistException(String message){
         super(message);

@@ -11,6 +11,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
+// Creates, parses, and validates JWT tokens
 @Service
 public class JwtService {
 
