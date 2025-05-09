@@ -2,6 +2,7 @@ package com.deanguterman.minidropbox;
 
 import jakarta.persistence.*;
 
+import java.io.File;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,6 +19,8 @@ public class FileEntity {
 
     @ManyToOne
     private User user;
+
+    public FileEntity(){}
 
     public FileEntity(String filename, String path, Long size, LocalDateTime uploadTime, User user){
         this.filename = filename;

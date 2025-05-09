@@ -24,19 +24,36 @@ public class FileService {
     }
 
     public String uploadFile(MultipartFile file, User user) {
-        // If the uploads folder does not exist, create one
-        File uploadsFolder = new File("Uploads");
-        if (!uploadsFolder.exists()) uploadsFolder.mkdir();
+        // Always create Uploads folder at the project root (not inside temp dirs)
+        String basePath = System.getProperty("user.dir"); // Gets the actual project root
+        File uploadsFolder = new File(basePath, "Uploads");
+
+        if (!uploadsFolder.exists()) {
+            boolean created = uploadsFolder.mkdir();
+            System.out.println("Uploads folder created: " + created);
+        }
 
         File destination = new File(uploadsFolder, file.getOriginalFilename());
-        try{
+        System.out.println("Writing to: " + destination.getAbsolutePath());
+
+        try {
             file.transferTo(destination);
+            System.out.println("File saved.");
         } catch (IOException e) {
+            e.printStackTrace();
             return "File upload failed";
         }
 
-        FileEntity newFile = new FileEntity(file.getOriginalFilename(), destination.getAbsolutePath(), file.getSize(), LocalDateTime.now(), user);
+        FileEntity newFile = new FileEntity(
+                file.getOriginalFilename(),
+                destination.getAbsolutePath(),
+                file.getSize(),
+                LocalDateTime.now(),
+                user
+        );
+
         fileRepository.save(newFile);
+        System.out.println("File entity saved to database.");
         return "File uploaded successfully";
     }
 
