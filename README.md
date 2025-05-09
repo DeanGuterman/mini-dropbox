@@ -2,6 +2,15 @@
 
 A minimal file storage backend built with **Spring Boot**, **Java**, and **PostgreSQL** — inspired by Dropbox. Users can register, log in, upload files, and download them later via RESTful endpoints.
 
+## 📁 Project Structure
+- `controller/` — Web layer
+- `dto/` — Data Transfer Objects
+- `entity/` — Database entities
+- `service/` — Business logic
+- `repository/` — JPA Repositories
+- `security/` — JWT + Spring Security setup
+- `exception/` — Custom error handling
+
 ## 🚀 Features
 
 - ✅ User registration with password encryption (BCrypt)
