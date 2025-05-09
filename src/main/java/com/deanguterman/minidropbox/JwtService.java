@@ -13,18 +13,18 @@ import java.util.Date;
 public class JwtService {
 
     private final Key secretKey;
-    private final long jwtExpirationMilis;
+    private final long jwtExpirationMillis;
 
-    public JwtService(@Value("${jwt.secret}") String secret, @Value("${jwt.expiration}") long jwtExpirationMilis) {
+    public JwtService(@Value("${jwt.secret}") String secret, @Value("${jwt.expiration}") long jwtExpirationMillis) {
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes());
-        this.jwtExpirationMilis = jwtExpirationMilis;
+        this.jwtExpirationMillis = jwtExpirationMillis;
     }
 
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMilis))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMillis))
                 .signWith(secretKey)
                 .compact();
     }
