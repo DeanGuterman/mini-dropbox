@@ -32,8 +32,8 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@Valid @RequestBody UserLoginRequest userLoginRequest){
         try{
-            userService.loginUser(userLoginRequest);
-            return ResponseEntity.ok("User logged in successfully");
+            String jwt = userService.loginUser(userLoginRequest);
+            return ResponseEntity.ok(jwt);
         } catch (UserDoesntExistException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
