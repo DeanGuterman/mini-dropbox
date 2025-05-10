@@ -26,30 +26,10 @@ public class FileService {
         this.fileRepository = fileRepository;
     }
 
-    public String uploadFile(MultipartFile file, User user) {
-        // Always create Uploads folder at the project root (not inside temp dirs)
-        String basePath = System.getProperty("user.dir"); // Gets the actual project root
-        File uploadsFolder = new File(basePath, "Uploads");
-
-        if (!uploadsFolder.exists()) {
-            boolean created = uploadsFolder.mkdir();
-            System.out.println("Uploads folder created: " + created);
-        }
-
-        File destination = new File(uploadsFolder, file.getOriginalFilename());
-        System.out.println("Writing to: " + destination.getAbsolutePath());
-
-        try {
-            file.transferTo(destination);
-            System.out.println("File saved.");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "File upload failed";
-        }
-
+    public String uploadFile(MultipartFile file, User user, String s3Key) {
         StoredFile newFile = new StoredFile(
                 file.getOriginalFilename(),
-                destination.getAbsolutePath(),
+                s3Key,
                 file.getSize(),
                 LocalDateTime.now(),
                 user
