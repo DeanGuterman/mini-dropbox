@@ -1,5 +1,8 @@
 package com.deanguterman.minidropbox.controller;
 
+import com.deanguterman.minidropbox.aws.S3StorageService;
+import com.deanguterman.minidropbox.aws.S3StorageServiceImpl;
+import com.deanguterman.minidropbox.exception.FileEmptyException;
 import com.deanguterman.minidropbox.service.FileService;
 import com.deanguterman.minidropbox.entity.User;
 import com.deanguterman.minidropbox.repository.UserRepository;
@@ -18,20 +21,26 @@ import java.util.Optional;
 public class FileController {
     private final FileService fileService;
     private final UserRepository userRepository;
+    private final S3StorageService s3StorageService;
 
-    public FileController(FileService fileService, UserRepository userRepository){
+    public FileController(FileService fileService, UserRepository userRepository, S3StorageService s3StorageService){
         this.fileService = fileService;
         this.userRepository = userRepository;
+        this.s3StorageService = s3StorageService;
     }
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam MultipartFile file, @RequestParam String username){
-        if (file == null || file.isEmpty()) return ResponseEntity.badRequest().body("File is missing");
 
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()){
-            fileService.uploadFile(file, user.get());
-            return ResponseEntity.ok("File uploaded successfully");
+            try {
+                String s3key = s3StorageService.uploadFileToS3(file, username);
+                fileService.uploadFile(file, user.get(), s3key);
+                return ResponseEntity.ok("File uploaded successfully");
+            } catch (FileEmptyException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            }
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User not found");
         }
