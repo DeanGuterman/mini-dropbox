@@ -1,5 +1,6 @@
 package com.deanguterman.minidropbox.aws;
 
+import com.deanguterman.minidropbox.exception.FileEmptyException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -20,7 +21,7 @@ public class S3StorageServiceImpl implements S3StorageService {
     }
 
     @Override
-    public String uploadFile(MultipartFile file, String keyHint){
+    public String uploadFileToS3(MultipartFile file, String keyHint) throws FileEmptyException{
         String key = UUID.randomUUID() + "_" + file.getOriginalFilename();
 
         try {
@@ -33,7 +34,7 @@ public class S3StorageServiceImpl implements S3StorageService {
                     RequestBody.fromInputStream(file.getInputStream(), file.getSize())
             );
         } catch (IOException e) {
-            throw new RuntimeException("Failed to upload file to S3", e);
+            throw new FileEmptyException("File is empty, failed to upload");
         }
 
         return key;
