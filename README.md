@@ -54,7 +54,7 @@ A minimal file storage backend built with **Spring Boot**, **Java**, and **Postg
 
 ## 📌 To Do
 
-- [✅] Add JWT-based authentication
-- [ ] Move file storage to AWS S3 (Currently in development)
+- [ ] Add JWT-based authentication
+- [ ] Move file storage to AWS S3
 - [ ] Add file deletion and listing endpoints
 - [ ] Improve error handling with global exception handling
