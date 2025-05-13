@@ -9,4 +9,6 @@ import java.io.InputStream;
 public interface S3StorageService {
     String uploadFileToS3(MultipartFile file, String key);
     InputStream downloadFileFromS3(String s3key) throws FileNotFoundException;
+    void deleteFileFromS3(String s3Key);
+
 }
