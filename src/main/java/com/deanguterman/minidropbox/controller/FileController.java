@@ -6,13 +6,17 @@ import com.deanguterman.minidropbox.exception.FileEmptyException;
 import com.deanguterman.minidropbox.service.FileService;
 import com.deanguterman.minidropbox.entity.User;
 import com.deanguterman.minidropbox.repository.UserRepository;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Optional;
 
 // Handles file upload and download endpoints
@@ -46,16 +50,33 @@ public class FileController {
         }
     }
 
-    @GetMapping("/download/{fileId}")
-    public ResponseEntity<Resource> downloadFIle(@PathVariable Long fileId){
+    @GetMapping("/download/{s3key}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String s3key){
         try{
-            Resource fileResource = fileService.downloadFile(fileId);
+            InputStream inputStream = s3StorageService.downloadFileFromS3(s3key);
+            InputStreamResource resource = new InputStreamResource(inputStream);
+
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileResource.getFilename() + "\"")
-                    .body(fileResource);
-        } catch(Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + s3key + "\"")
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(resource);
+
+        } catch (FileNotFoundException e){
+            return ResponseEntity.notFound().build();
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().build();
         }
     }
 
+//    @GetMapping("/download/{fileId}")
+//    public ResponseEntity<Resource> downloadFIle(@PathVariable Long fileId){
+//        try{
+//            Resource fileResource = fileService.downloadFile(fileId);
+//            return ResponseEntity.ok()
+//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileResource.getFilename() + "\"")
+//                    .body(fileResource);
+//        } catch(Exception e){
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//        }
+//    }
 }
