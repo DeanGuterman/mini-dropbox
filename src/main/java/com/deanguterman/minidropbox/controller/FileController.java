@@ -2,10 +2,12 @@ package com.deanguterman.minidropbox.controller;
 
 import com.deanguterman.minidropbox.aws.S3StorageService;
 import com.deanguterman.minidropbox.aws.S3StorageServiceImpl;
+import com.deanguterman.minidropbox.entity.StoredFile;
 import com.deanguterman.minidropbox.exception.FileEmptyException;
 import com.deanguterman.minidropbox.service.FileService;
 import com.deanguterman.minidropbox.entity.User;
 import com.deanguterman.minidropbox.repository.UserRepository;
+import org.apache.catalina.Store;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Optional;
 
 // Handles file upload and download endpoints
@@ -67,6 +70,12 @@ public class FileController {
         } catch (Exception e){
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    @GetMapping("/files")
+    public ResponseEntity<List<StoredFile>> getAllFiles(){
+        List<StoredFile> files = fileService.getAllFiles();
+        return ResponseEntity.ok(files);
     }
 
     @DeleteMapping("/files/{id}")
