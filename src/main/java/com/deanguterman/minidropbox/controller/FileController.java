@@ -50,9 +50,10 @@ public class FileController {
         }
     }
 
-    @GetMapping("/download/{s3key}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String s3key){
+    @GetMapping("/download/{id}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Long id){
         try{
+            String s3key = fileService.getS3KeyFromId(id);
             InputStream inputStream = s3StorageService.downloadFileFromS3(s3key);
             InputStreamResource resource = new InputStreamResource(inputStream);
 
@@ -65,6 +66,19 @@ public class FileController {
             return ResponseEntity.notFound().build();
         } catch (Exception e){
             return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping("/files/{id}")
+    public ResponseEntity<String> deleteFile(@PathVariable Long id) {
+        try {
+            String s3key = fileService.deleteFile(id);
+            s3StorageService.deleteFileFromS3(s3key);
+            return ResponseEntity.ok("File deleted successfully");
+        } catch (FileNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("File not found");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete file");
         }
     }
 
