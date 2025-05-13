@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -62,5 +63,9 @@ public class FileService {
 
         fileRepository.delete(file);
         return file.getS3Key();
+    }
+
+    public List<StoredFile> getAllFiles(){
+        return fileRepository.findAll();
     }
 }
