@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -26,30 +27,10 @@ public class FileService {
         this.fileRepository = fileRepository;
     }
 
-    public String uploadFile(MultipartFile file, User user) {
-        // Always create Uploads folder at the project root (not inside temp dirs)
-        String basePath = System.getProperty("user.dir"); // Gets the actual project root
-        File uploadsFolder = new File(basePath, "Uploads");
-
-        if (!uploadsFolder.exists()) {
-            boolean created = uploadsFolder.mkdir();
-            System.out.println("Uploads folder created: " + created);
-        }
-
-        File destination = new File(uploadsFolder, file.getOriginalFilename());
-        System.out.println("Writing to: " + destination.getAbsolutePath());
-
-        try {
-            file.transferTo(destination);
-            System.out.println("File saved.");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "File upload failed";
-        }
-
+    public String uploadFile(MultipartFile file, User user, String s3Key) {
         StoredFile newFile = new StoredFile(
                 file.getOriginalFilename(),
-                destination.getAbsolutePath(),
+                s3Key,
                 file.getSize(),
                 LocalDateTime.now(),
                 user
@@ -60,15 +41,31 @@ public class FileService {
         return "File uploaded successfully";
     }
 
-    public Resource downloadFile(Long fileId) throws Exception{
-        Optional<StoredFile> file = fileRepository.findById(fileId);
-        if (file.isPresent()){
-            String filePath = file.get().getPath();
-            File actualFile = new File(filePath);
-            if (!actualFile.exists()) throw new FileNotFoundException("File not found on disk");
-            return new InputStreamResource(new FileInputStream(actualFile));
-        } else {
-            throw new Exception("File not found in database");
-        }
+    public String getS3KeyFromId(Long id){
+        return fileRepository.getReferenceById(id).getS3Key();
+    }
+
+//    public Resource downloadFile(Long fileId) throws Exception{
+//        Optional<StoredFile> file = fileRepository.findById(fileId);
+//        if (file.isPresent()){
+//            String filePath = file.get().getPath();
+//            File actualFile = new File(filePath);
+//            if (!actualFile.exists()) throw new FileNotFoundException("File not found on disk");
+//            return new InputStreamResource(new FileInputStream(actualFile));
+//        } else {
+//            throw new Exception("File not found in database");
+//        }
+//    }
+
+    public String deleteFile(Long fileId) throws FileNotFoundException {
+        StoredFile file = fileRepository.findById(fileId)
+                .orElseThrow(() -> new FileNotFoundException("File not found"));
+
+        fileRepository.delete(file);
+        return file.getS3Key();
+    }
+
+    public List<StoredFile> getAllFiles(){
+        return fileRepository.findAll();
     }
 }

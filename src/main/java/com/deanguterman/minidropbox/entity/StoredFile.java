@@ -13,7 +13,7 @@ public class StoredFile {
     private Long id;
 
     private String filename;
-    private String path;
+    private String s3key;
     private Long size;
     private LocalDateTime uploadTime;
 
@@ -22,9 +22,9 @@ public class StoredFile {
 
     public StoredFile(){}
 
-    public StoredFile(String filename, String path, Long size, LocalDateTime uploadTime, User user){
+    public StoredFile(String filename, String s3key, Long size, LocalDateTime uploadTime, User user){
         this.filename = filename;
-        this.path = path;
+        this.s3key = s3key;
         this.size = size;
         this.uploadTime = uploadTime;
         this.user = user;
@@ -32,14 +32,14 @@ public class StoredFile {
 
     // Getters
     public String getFilename(){return filename;}
-    public String getPath(){return path;}
+    public String getS3Key(){return s3key;}
     public Long getSize(){return size;}
     public LocalDateTime getUploadTime(){return uploadTime;}
     public User getUser(){return user;}
 
     // Setters
     public void setFilename(String filename){this.filename = filename;}
-    public void setPath(String path){this.path = path;}
+    public void setS3Key(String s3key){this.s3key = s3key;}
     public void setSize(Long size){this.size = size;}
     public void setUploadTime(LocalDateTime uploadTime){this.uploadTime = uploadTime;}
     public void setUser(User user){this.user = user;}
