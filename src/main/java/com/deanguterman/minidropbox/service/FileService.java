@@ -40,15 +40,27 @@ public class FileService {
         return "File uploaded successfully";
     }
 
-    public Resource downloadFile(Long fileId) throws Exception{
-        Optional<StoredFile> file = fileRepository.findById(fileId);
-        if (file.isPresent()){
-            String filePath = file.get().getPath();
-            File actualFile = new File(filePath);
-            if (!actualFile.exists()) throw new FileNotFoundException("File not found on disk");
-            return new InputStreamResource(new FileInputStream(actualFile));
-        } else {
-            throw new Exception("File not found in database");
-        }
+    public String getS3KeyFromId(Long id){
+        return fileRepository.getReferenceById(id).getS3Key();
+    }
+
+//    public Resource downloadFile(Long fileId) throws Exception{
+//        Optional<StoredFile> file = fileRepository.findById(fileId);
+//        if (file.isPresent()){
+//            String filePath = file.get().getPath();
+//            File actualFile = new File(filePath);
+//            if (!actualFile.exists()) throw new FileNotFoundException("File not found on disk");
+//            return new InputStreamResource(new FileInputStream(actualFile));
+//        } else {
+//            throw new Exception("File not found in database");
+//        }
+//    }
+
+    public String deleteFile(Long fileId) throws FileNotFoundException {
+        StoredFile file = fileRepository.findById(fileId)
+                .orElseThrow(() -> new FileNotFoundException("File not found"));
+
+        fileRepository.delete(file);
+        return file.getS3Key();
     }
 }
