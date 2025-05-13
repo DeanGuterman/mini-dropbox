@@ -1,60 +1,26 @@
 # Mini Dropbox
 
-A minimal file storage backend built with **Spring Boot**, **Java**, and **PostgreSQL** — inspired by Dropbox. Users can register, log in, upload files, and download them later via RESTful endpoints.
+A minimal, secure file-sharing web service built with Spring Boot.  
+The project supports user registration, login, file uploads to AWS S3, file downloads, and deletion — all with JWT-based authentication.
 
-## 📁 Project Structure
-- `controller/` — Web layer
-- `dto/` — Data Transfer Objects
-- `entity/` — Database entities
-- `service/` — Business logic
-- `repository/` — JPA Repositories
-- `security/` — JWT + Spring Security setup
-- `exception/` — Custom error handling
+### 🚀 Tech Stack
+- Java 17 + Spring Boot
+- AWS S3 for file storage
+- PostgreSQL for metadata
+- JWT for authentication
 
-## 🚀 Features
+### ✅ Features
+- User authentication (register/login)
+- Upload files to S3
+- Download files from S3
+- Delete files (S3 + DB)
+- List all uploaded files per user
 
-- ✅ User registration with password encryption (BCrypt)
-- ✅ Login endpoint with credential verification
-- ✅ File upload with automatic storage to local `Uploads/` directory
-- ✅ File metadata persistence (name, path, size, upload time, owner)
-- ✅ File download via file ID
-- 🔐 Basic Spring Security config (CSRF disabled, endpoints open during development)
+### 🔐 Security
+- Files are stored in S3 and never locally
+- All endpoints require a valid JWT token
+- Each user can only access their own files
 
-## 🛠 Tech Stack
+---
 
-- Java 21
-- Spring Boot 3
-- PostgreSQL
-- JPA (Hibernate)
-- Postman for testing
-
-## 📦 Project Structure
-
-- `User`: Entity and controller for registration/login
-- `FileEntity`: Stores metadata about uploaded files
-- `FileService` & `FileController`: Handle upload/download logic
-- `SecurityConfig`: Enables development-friendly security setup
-
-## 🧪 How to Test (Using Postman)
-
-1. **Register a User**
-   - `POST /api/users/register`
-   - Body (JSON): `{ "username": "dean", "email": "dean@example.com", "password": "StrongPass123!" }`
-
-2. **Log In**
-   - `POST /api/users/login`
-   - Body (JSON): `{ "username": "dean", "password": "StrongPass123!" }`
-
-3. **Upload a File**
-   - `POST /api/files/upload`
-   - Form Data: `file=[choose file], username=dean`
-
-4. **Download a File**
-   - `GET /api/files/download/{fileId}`
-
-## 📌 To Do
-
-- [ ] Add JWT-based authentication
-- [ ] Move file storage to AWS S3
-- [ ] Add file deletion and listing endpoints
-- [ ] Improve error handling with global exception handling
+Designed to demonstrate clean architecture, cloud integration, and modern backend development practices.
