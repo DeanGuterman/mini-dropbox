@@ -4,6 +4,7 @@ import com.deanguterman.minidropbox.exception.FileDoesntExistException;
 import com.deanguterman.minidropbox.exception.FileEmptyException;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+@Service
 public class S3StorageServiceImpl implements S3StorageService {
     private final S3Client s3Client;
 
