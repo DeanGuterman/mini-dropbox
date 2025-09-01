@@ -1,7 +1,7 @@
 # Mini Dropbox
 
 A minimal, secure file-sharing web service built with Spring Boot.  
-The project supports user registration, login, file uploads to AWS S3, file downloads, and deletion — all with JWT-based authentication.
+The project supports user registration, login, file uploads to AWS S3, file downloads, and deletion - all with JWT-based authentication.
 
 ###  Tech Stack
 - Java 17 + Spring Boot
